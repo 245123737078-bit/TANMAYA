@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TANMAYA – TraditionalFit</title>
+
+  <!-- Your global styles (keep if you have) -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    body {
+      margin: 0;
+      background: #050505;
+      color: #f7f3d8;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .tf-back-btn {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      background: transparent;
+      color: #ffd875;
+      border: 1px solid rgba(255, 215, 0, 0.6);
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      transition: 0.2s;
+      z-index: 999;
+    }
+
+    .tf-back-btn:hover {
+      background: rgba(255, 215, 0, 0.1);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+      transform: translateX(-3px);
+    }
+
+    .tf-wrapper {
+      max-width: 1100px;
+      margin: 70px auto 40px;
+      padding: 24px;
+    }
+
+    .tf-pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 215, 0, 0.1);
+      border: 1px solid rgba(255, 215, 0, 0.5);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+      color: #ffd875;
+    }
+
+    .tf-title {
+      font-size: 2rem;
+      text-align: center;
+      color: #ffd875;
+      margin-bottom: 6px;
+    }
+
+    .tf-subtitle {
+      text-align: center;
+      opacity: 0.75;
+      margin-bottom: 24px;
+    }
+
+    .tf-panel {
+      background: linear-gradient(135deg, #141414 0%, #050505 100%);
+      border-radius: 18px;
+      padding: 18px 18px 16px;
+      border: 1px solid rgba(255, 215, 0, 0.35);
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.8);
+      margin-bottom: 20px;
+    }
+
+    .tf-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+    }
+
+    .tf-summary span.label {
+      opacity: 0.7;
+    }
+
+    .tf-filter-label {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      margin-bottom: 6px;
+    }
+
+    .tf-filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .tf-chip {
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      border: 1px solid rgba(255, 215, 0, 0.5);
+      background: rgba(10, 10, 10, 0.9);
+      color: #ffd875;
+      letter-spacing: 0.04em;
+      transition: 0.2s;
+    }
+
+    .tf-chip:hover {
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .tf-chip.tf-chip-active {
+      background: radial-gradient(circle at top, #ffe08a 0%, #ffc94a 40%, #b7841f 100%);
+      border-color: rgba(255, 215, 0, 0.9);
+      color: #1a1200;
+      font-weight: 600;
+    }
+
+    .tf-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .tf-card {
+      background: radial-gradient(circle at top, #262626 0%, #111 55%, #050505 100%);
+      border-radius: 16px;
+      padding: 14px 16px;
+      border: 1px solid rgba(255, 215, 0, 0.35);
+      box-shadow: 0 0 14px rgba(0, 0, 0, 0.8);
+      font-size: 0.9rem;
+    }
+
+    /* image / gradient strip at top of each card */
+    .tf-card-img {
+      width: 100%;
+      height: 110px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .tf-card-type {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.85;
+    }
+
+    .tf-card-name {
+      margin: 4px 0 6px;
+      font-size: 1.05rem;
+      color: #ffe79a;
+    }
+
+    .tf-card-desc {
+      opacity: 0.9;
+      margin-bottom: 6px;
+    }
+
+    .tf-card-line {
+      margin: 0 0 4px;
+      font-size: 0.85rem;
+    }
+
+    .tf-empty {
+      font-size: 0.9rem;
+      opacity: 0.75;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .tf-wrapper {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Back button -->
+  <button class="tf-back-btn" id="tf-back-btn">← Back</button>
+
+  <div class="tf-wrapper">
+    <div class="tf-pill">TraditionalFit</div>
+    <h1 class="tf-title">Traditional Outfit Picks</h1>
+    <p class="tf-subtitle">
+      Sarees, lehengas, kurtas and sherwanis curated from your ShapeGuide and Colour Analysis.
+    </p>
+
+    <!-- Profile + filters + cards -->
+    <section class="tf-panel">
+      <!-- profile summary -->
+      <div class="tf-summary">
+        <div><span class="label">Body shape:</span> <span id="tf-shape">–</span></div>
+        <div><span class="label">Skin tone:</span> <span id="tf-tone">–</span></div>
+        <div><span class="label">Undertone:</span> <span id="tf-undertone">–</span></div>
+      </div>
+
+      <!-- filter chips -->
+      <div class="tf-filter-label">Filter by outfit type:</div>
+      <div class="tf-filter-row">
+        <button class="tf-chip tf-chip-active" data-type="all">All</button>
+        <button class="tf-chip" data-type="Saree">Saree</button>
+        <button class="tf-chip" data-type="Lehenga">Lehenga</button>
+        <button class="tf-chip" data-type="Kurta Set">Kurta</button>
+        <button class="tf-chip" data-type="Sherwani">Sherwani</button>
+      </div>
+
+      <!-- cards grid -->
+      <div class="tf-grid" id="tf-outfit-list">
+        <!-- JS will inject outfit cards -->
+      </div>
+
+      <p class="tf-empty" id="tf-empty-msg" style="display:none;">
+        No strong matches yet. Try selecting your body shape in ShapeGuide and running Colour Analysis.
+      </p>
+    </section>
+  </div>
+
+  <!-- Logic -->
+  <script src="js/traditionalFit.js"></script>
+</body>
+</html>

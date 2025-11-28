@@ -1,0 +1,24 @@
+<div id="resultText" style="text-align:center; font-size:18px;"></div>
+
+<script>
+const data = JSON.parse(localStorage.getItem("analysisResult"));
+
+if (data) {
+    document.getElementById("resultText").innerHTML = `
+        <h2>Your AI Personal Styling Result</h2>
+
+        <b>Skin Tone:</b> ${data.skinTone}<br>
+        <b>Undertone:</b> ${data.undertone}<br>
+        <b>Face Shape:</b> ${data.faceShape}<br><br>
+
+        <b>Best Colours:</b> ${data.bestColours.join(", ")}<br><br>
+
+        <b>Recommended Jewellery:</b> ${data.jewellery}<br><br>
+
+        <b>Hairstyle Suggestions:</b> ${data.hairstyle}<br><br>
+
+        <b>Best Outfits for You:</b><br>
+        ${data.outfit.join(", ")}
+    `;
+}
+</script>

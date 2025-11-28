@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TANMAYA – EventStyles</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body { background:black; color:#ffd875; font-family:Poppins,sans-serif; margin:0; }
+    .back-btn { position:fixed; top:15px; left:15px; border:1px solid gold; background:transparent; color:gold; padding:6px 12px; cursor:pointer; border-radius:6px;}
+    .wrapper { max-width:900px; margin:80px auto; padding:20px; }
+    .title { text-align:center; font-size:2rem; margin-bottom:10px; }
+    .events { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+    .event-btn { padding:10px 14px; border:1px solid gold; background:#111; color:gold; border-radius:20px; cursor:pointer; }
+    .event-btn.active { background:gold; color:black; }
+    .cards { display:grid; gap:14px; grid-template-columns:1fr 1fr; }
+    .card { background:#111; border:1px solid gold; border-radius:10px; padding:14px; }
+    .card h3 { margin:0 0 6px; color:gold; }
+    .palette { display:flex; gap:6px; margin-top:6px; }
+    .dot { width:16px; height:16px; border-radius:50%; border:1px solid white; }
+  </style>
+</head>
+<body>
+
+<button class="back-btn" onclick="window.history.back()">← Back</button>
+
+<div class="wrapper">
+  <h1 class="title">EventStyles</h1>
+  <p style="text-align:center;">Pick an event. Get 1 Traditional + 1 Modern outfit idea.</p>
+
+  <div class="events">
+    <button class="event-btn active" data-event="wedding">Wedding</button>
+    <button class="event-btn" data-event="party">Party</button>
+    <button class="event-btn" data-event="office">Office</button>
+    <button class="event-btn" data-event="college">College</button>
+    <button class="event-btn" data-event="casual">Casual</button>
+    <button class="event-btn" data-event="festival">Festival</button>
+  </div>
+
+  <div class="cards" id="es-cards"></div>
+</div>
+
+<script src="js/eventStyles.js"></script>
+</body>
+</html>

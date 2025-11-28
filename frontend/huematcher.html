@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HueMatcher – TANMAYA</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: black;
+        color: white;
+        font-family: "Georgia", serif;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 48px;
+        margin-top: 40px;
+        background: linear-gradient(#F8E7B2, #D4AF37);
+        -webkit-background-clip: text;
+        color: transparent;
+        text-shadow: 0 0 15px #D4AF37;
+    }
+
+    p.subtitle {
+        font-size: 18px;
+        color: #E3C98A;
+        margin-top: 10px;
+    }
+
+    .info-line {
+        font-size: 14px;
+        color: #cbb57a;
+        margin-top: 4px;
+        opacity: 0.9;
+    }
+
+    .highlight {
+        color: #ffe8a3;
+        font-weight: bold;
+    }
+
+    .palette-container {
+        width: 90%;
+        margin: 40px auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 25px;
+    }
+
+    .palette-card {
+        background: rgba(255,255,255,0.06);
+        padding: 20px;
+        border-radius: 18px;
+        border: 1px solid gold;
+        text-align: left;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .palette-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 18px rgba(212, 175, 55, 0.5);
+    }
+
+    .swatches {
+        display: flex;
+        height: 60px;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 15px;
+    }
+
+    .swatch {
+        flex: 1;
+    }
+
+    .title {
+        font-size: 20px;
+        color: #E6C97A;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .tip {
+        font-size: 14px;
+        color: #E3C98A;
+    }
+
+    .tag {
+        font-size: 12px;
+        color: #F1D89A;
+        margin-top: 6px;
+        opacity: 0.9;
+    }
+
+    .back-btn {
+        margin: 30px auto 40px;
+        background: gold;
+        color: black;
+        padding: 12px 25px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 0 15px rgba(212,175,55,0.6);
+    }
+
+    .back-btn:hover {
+        box-shadow: 0 0 25px rgba(212,175,55,0.9);
+        transform: translateY(-2px);
+    }
+</style>
+</head>
+
+<body>
+
+<h1>HueMatcher</h1>
+<p class="subtitle">Colour combinations matched to your ColorSense result 🎨</p>
+<p class="info-line">
+    Shape & tone aware: using your <span class="highlight">undertone</span> and <span class="highlight">saved palette</span>.
+</p>
+<p class="info-line" id="hm-profile-line"></p>
+
+<div id="palette-container" class="palette-container">
+    <!-- JS will insert cards here -->
+</div>
+
+<button class="back-btn" id="back-btn">⬅ Back</button>
+
+<script>
+/*
+  DYNAMIC HUE MATCHER
+  - Reads:
+      tanmaya_undertone   ("warm" / "cool" / "neutral")
+      tanmaya_skinTone    ("fair" / "medium" / "deep")
+      tanmaya_bestColors  (JSON array from Color Analysis)
+*/
+
+// helper: safe JSON parse
+function hmSafeParseArray(str) {
+  if (!str) return [];
+  try {
+    var parsed = JSON.parse(str);
+    if (Object.prototype.toString.call(parsed) === "[object Array]") {
+      return parsed;
+    }
+    return [];
+  } catch (e) {
+    return [];
+  }
+}
+
+// get profile from localStorage
+function hmGetProfile() {
+  var undertone = (localStorage.getItem("tanmaya_undertone") || "neutral").toLowerCase();
+  var tone      = (localStorage.getItem("tanmaya_skinTone") || "").toLowerCase();
+  var best      = hmSafeParseArray(localStorage.getItem("tanmaya_bestColors"));
+
+  return {
+    undertone: undertone,
+    tone: tone,
+    bestColors: best
+  };
+}
+
+// base palette DB
+var HM_PALETTES = {
+  warm: [
+    {
+      combo: "Maroon + Gold",
+      colors: ["#800000", "#d4af37"],
+      tip: "Rich and bold – perfect for weddings and night functions.",
+      tag: "Try: maroon saree / kurta with gold jewellery."
+    },
+    {
+      combo: "Olive + Cream",
+      colors: ["#556b2f", "#f5f5dc"],
+      tip: "Earthy and soft – great for daytime and semi-festive looks.",
+      tag: "Try: olive dress with cream dupatta or blazer."
+    },
+    {
+      combo: "Mustard + Rust",
+      colors: ["#d97706", "#b45309"],
+      tip: "High-energy combination that looks amazing on warm undertones.",
+      tag: "Try: mustard kurti with rust bottoms or shawl."
+    }
+  ],
+  cool: [
+    {
+      combo: "Navy + Silver",
+      colors: ["#001f3f", "#c0c0c0"],
+      tip: "Elegant and sharp – perfect for receptions and formal events.",
+      tag: "Try: navy suit / saree with silver accessories."
+    },
+    {
+      combo: "Lavender + White",
+      colors: ["#c4b5fd", "#ffffff"],
+      tip: "Soft and dreamy – ideal for brunch, college or day events.",
+      tag: "Try: lavender top with white pants or skirt."
+    },
+    {
+      combo: "Berry + Charcoal",
+      colors: ["#9f1239", "#111827"],
+      tip: "Modern and chic – great for parties and evenings.",
+      tag: "Try: berry dress with charcoal jacket or heels."
+    }
+  ],
+  neutral: [
+    {
+      combo: "Beige + Maroon",
+      colors: ["#f5f5dc", "#800000"],
+      tip: "Classic and graceful – works for almost any festive event.",
+      tag: "Try: beige lehenga / kurta with maroon dupatta."
+    },
+    {
+      combo: "Brown + Rose",
+      colors: ["#7c5246", "#fca5a5"],
+      tip: "Soft contrast that flatters most skin tones.",
+      tag: "Try: brown trousers with rose-toned top."
+    },
+    {
+      combo: "Black + Camel",
+      colors: ["#000000", "#c19a6b"],
+      tip: "Minimal and premium – perfect for daily chic outfits.",
+      tag: "Try: black base outfit with camel coat / dupatta."
+    }
+  ]
+};
+
+// render palette cards into the page
+function hmRenderPalettes(profile) {
+  var container = document.getElementById("palette-container");
+  if (!container) return;
+
+  var undertone = profile.undertone || "neutral";
+  var tone = profile.tone || "";
+  var baseList = HM_PALETTES[undertone] || HM_PALETTES["neutral"];
+
+  // clone list so we don't modify original
+  var finalList = baseList.slice();
+
+  // if Color Analysis saved a personal palette, add it as an extra card
+  if (profile.bestColors && profile.bestColors.length >= 2) {
+    var personalColors = profile.bestColors.slice(0, 4); // max 4
+    finalList.unshift({
+      combo: "Your ColorSense Palette",
+      colors: personalColors,
+      tip: "Auto-generated from your Color Analysis. Use any 2–3 together.",
+      tag: "These shades are already matched to your undertone."
+    });
+  }
+
+  // build HTML
+  var html = "";
+  for (var i = 0; i < finalList.length; i++) {
+    var item = finalList[i];
+    var swatchHtml = "";
+    if (item.colors && item.colors.length) {
+      for (var j = 0; j < item.colors.length; j++) {
+        swatchHtml += '<div class="swatch" style="background:' + item.colors[j] + ';"></div>';
+      }
+    }
+
+    html +=
+      '<div class="palette-card" data-combo="' + item.combo + '">' +
+        '<div class="swatches">' + swatchHtml + '</div>' +
+        '<div class="title">' + item.combo + '</div>' +
+        '<div class="tip">' + item.tip + '</div>' +
+        '<div class="tag">' + item.tag + '</div>' +
+      '</div>';
+  }
+
+  container.innerHTML = html;
+
+  // attach click interaction
+  var cards = container.getElementsByClassName("palette-card");
+  for (var k = 0; k < cards.length; k++) {
+    cards[k].addEventListener("click", function () {
+      var combo = this.getAttribute("data-combo");
+      alert("Great pick! " + combo + " is matched to your tone.");
+    });
+  }
+}
+
+// update small profile line text
+function hmRenderProfileLine(profile) {
+  var lineEl = document.getElementById("hm-profile-line");
+  if (!lineEl) return;
+
+  var undertone = profile.undertone || "neutral";
+  var tone = profile.tone || "not set";
+
+  lineEl.textContent =
+    "Detected skin tone: " + tone + " | Undertone: " + undertone + " (from Colour Analysis).";
+}
+
+// init
+document.addEventListener("DOMContentLoaded", function () {
+  var profile = hmGetProfile();
+  hmRenderProfileLine(profile);
+  hmRenderPalettes(profile);
+
+  var backBtn = document.getElementById("back-btn");
+  if (backBtn) {
+    backBtn.addEventListener("click", function () {
+      window.history.back();
+    });
+  }
+});
+</script>
+
+</body>
+</html>

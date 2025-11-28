@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TANMAYA – Explore Ethnic Looks</title>
+
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #050505;
+    color: #fdfaf0;
+    font-family: "Georgia", serif;
+  }
+
+  .page-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 18px 60px;
+  }
+
+  .title {
+    font-size: 40px;
+    text-align: center;
+    margin-top: 10px;
+    background: linear-gradient(#f8e7b2,#d4af37);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 15px #d4af37;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 16px;
+    color: #e3c98a;
+    margin-top: 6px;
+    margin-bottom: 25px;
+  }
+
+  .chip-row {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .chip {
+    display: inline-block;
+    margin: 6px 6px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(212,175,55,0.7);
+    color: #f6e4b2;
+    font-size: 13px;
+    cursor: pointer;
+    background: transparent;
+  }
+
+  .chip.active {
+    background: linear-gradient(#f1d89a,#c9a447);
+    color: #000;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+
+  .look-card {
+    background: rgba(255,255,255,0.03);
+    border-radius: 18px;
+    border: 1px solid rgba(212,175,55,0.6);
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+
+  .look-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 26px rgba(212,175,55,0.7);
+  }
+
+  .look-image {
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+
+  .look-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,rgba(0,0,0,0.6),transparent);
+  }
+
+  .look-body {
+    padding: 14px 16px 16px;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(212,175,55,0.7);
+    font-size: 11px;
+    color: #f6e4b2;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .look-title {
+    font-size: 18px;
+    color: #fdf4c5;
+    margin: 0 0 6px;
+  }
+
+  .look-text {
+    font-size: 13px;
+    color: #e5cc8f;
+    margin: 2px 0;
+  }
+
+  .label {
+    font-weight: bold;
+    color: #f9e3a0;
+  }
+
+  .back-btn {
+    margin: 30px auto 0;
+    display: block;
+    background: gold;
+    color: #000;
+    padding: 10px 22px;
+    border-radius: 999px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 16px rgba(212,175,55,0.7);
+  }
+
+  @media (max-width: 600px) {
+    .title { font-size: 32px; }
+  }
+</style>
+</head>
+
+<body>
+<div class="page-wrap">
+
+  <h1 class="title">Explore Ethnic Looks</h1>
+  <p class="subtitle">
+    A curated lookbook of women’s traditional outfits – ready-made saree & kurti ideas for every occasion.
+  </p>
+
+  <!-- FILTER CHIPS -->
+  <div class="chip-row">
+    <button class="chip active" data-filter="all">All</button>
+    <button class="chip" data-filter="wedding">Weddings</button>
+    <button class="chip" data-filter="festival">Festivals / Puja</button>
+    <button class="chip" data-filter="college">College & Casual</button>
+    <button class="chip" data-filter="party">Party / Sangeet</button>
+    <button class="chip" data-filter="minimal">Minimal Ethnic</button>
+  </div>
+
+  <!-- LOOK GRID -->
+  <div id="look-grid" class="grid">
+
+    <!-- Wedding 1 -->
+    <div class="look-card" data-cat="wedding">
+      <div class="look-image" style="background-image: linear-gradient(120deg,#3c0000,#c59a2f);"></div>
+      <div class="look-body">
+        <span class="pill">Wedding Saree</span>
+        <h3 class="look-title">Royal Maroon Kanjivaram</h3>
+        <p class="look-text"><span class="label">Colours:</span> maroon, antique gold.</p>
+        <p class="look-text"><span class="label">Accessories:</span> temple jewellery, layered necklace, bun with gajra.</p>
+        <p class="look-text"><span class="label">Best for:</span> bride’s sister / close family at evening weddings.</p>
+      </div>
+    </div>
+
+    <!-- Wedding 2 -->
+    <div class="look-card" data-cat="wedding">
+      <div class="look-image" style="background-image: linear-gradient(120deg,#2d2059,#f5e3ff);"></div>
+      <div class="look-body">
+        <span class="pill">Reception Lehenga</span>
+        <h3 class="look-title">Midnight Blue with Mirror Work</h3>
+        <p class="look-text"><span class="label">Colours:</span> navy, silver, soft lilac.</p>
+        <p class="look-text"><span class="label">Accessories:</span> statement earrings, no neckpiece, soft curls.</p>
+        <p class="look-text"><span class="label">Best for:</span> modern reception or cocktail night.</p>
+      </div>
+    </div>
+
+    <!-- Festival 1 -->
+    <div class="look-card" data-cat="festival">
+      <div class="look-image" style="background-image: linear-gradient(120deg,#facc15,#f97316);"></div>
+      <div class="look-body">
+        <span class="pill">Festival Kurta</span>
+        <h3 class="look-title">Haldi Yellow Anarkali</h3>
+        <p class="look-text"><span class="label">Colours:</span> turmeric yellow, white.</p>
+        <p class="look-text"><span class="label">Accessories:</span> jhumkas, glass bangles, fresh flowers.</p>
+        <p class="look-text"><span class="label">Best for:</span> puja, haldi, Navratri day events.</p>
+      </div>
+    </div>
+
+    <!-- Festival 2 -->
+    <div class="look-card" data-cat="festival">
+      <div class="look-image" style="background-image: linear-gradient(120deg,#14532d,#fbbf24);"></div>
+      <div class="look-body">
+        <span class="pill">Silk Saree</span>
+        <h3 class="look-title">Emerald Green with Mustard Border</h3>
+        <p class="look-text"><span class="label">Colours:</span> deep green, mustard, gold.</p>
+        <p class="look-text"><span class="label">Accessories:</span> choker + long chain, kohl eyes.</p>
+        <p class="look-text"><span class="label">Best for:</span> Diwali, Dussehra, temple visits.</p>
+      </div>
+    </div>
+
+    <!-- College / Casual 1 -->
+    <div class="look-card" data-cat="college">
+      <div class="look-image" style="background-image: linear-gradient(120deg,#f5f5f4,#fbb6ce);"></div>
+      <div class="look-body">
+        <span class="pill">College Ethnic</span>
+        <h3 class="look-title">Pastel Straight Kurti + Jeans</h3>
+        <p class="look-text"><span class="label">Colours:</span> blush pink, light blue denim.</p>
+        <p class="look-text"><span class="label">Accessories:</span> small hoops, watch, tote bag.</p>
+        <p class="look-text"><span class="label">Best for:</span> ethnic day / casual college.</p>
+      </div>
+    </div>
+
+    <!-- College / Casual 2 -->
+    <div class="look-card" data-cat="college">
+      <div class="look-image" style="background-image: linear-gradient(120deg,#0ea5e9,#f0f9ff);"></div>
+      <div class="look-body">
+        <span class="pill">Indo-Western</span>
+        <h3 class="look-title">Printed Shrug over Solid Kurta</h3>
+        <p class="look-text"><span class="label">Colours:</span> teal, white, printed multicolour.</p>
+        <p class="look-text"><span class="label">Accessories:</span> sneakers or kolhapuris, layered bracelets.</p>
+        <p class="look-text"><span class="label">Best for:</span> college, café, casual meetups.</p>
+      </div>
+    </div>
+
+    <!-- Party -->
+    <div class="look-card" data-cat="party">
+      <div class="look-image" style="background-image: linear-gradient(120deg,#4c1d95,#e879f9);"></div>
+      <div class="look-body">
+        <span class="pill">Sangeet Look</span>
+        <h3 class="look-title">Sequined Saree with Belt</h3>
+        <p class="look-text"><span class="label">Colours:</span> mauve, rose gold.</p>
+        <p class="look-text"><span class="label">Accessories:</span> statement belt, sleek ponytail.</p>
+        <p class="look-text"><span class="label">Best for:</span> sangeet, cocktail, night parties.</p>
+      </div>
+    </div>
+
+    <!-- Minimal -->
+    <div class="look-card" data-cat="minimal">
+      <div class="look-image" style="background-image: linear-gradient(120deg,#1f2937,#e5e7eb);"></div>
+      <div class="look-body">
+        <span class="pill">Minimal Ethnic</span>
+        <h3 class="look-title">Charcoal Kurta + Off-White Pants</h3>
+        <p class="look-text"><span class="label">Colours:</span> charcoal grey, off-white.</p>
+        <p class="look-text"><span class="label">Accessories:</span> tiny studs, single bracelet, nude flats.</p>
+        <p class="look-text"><span class="label">Best for:</span> office, meetings, simple functions.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="back-btn" onclick="window.history.back()">⬅ Back</button>
+
+</div>
+
+<script>
+// FILTER LOGIC
+document.addEventListener("DOMContentLoaded", function () {
+  var chips = document.querySelectorAll(".chip");
+  var cards = document.querySelectorAll(".look-card");
+
+  function applyFilter(type) {
+    cards.forEach(function (card) {
+      var cat = card.getAttribute("data-cat");
+      if (type === "all" || cat === type) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+
+  chips.forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      chips.forEach(function (c) { c.classList.remove("active"); });
+      chip.classList.add("active");
+      applyFilter(chip.getAttribute("data-filter"));
+    });
+  });
+
+  // default
+  applyFilter("all");
+});
+</script>
+
+</body>
+</html>

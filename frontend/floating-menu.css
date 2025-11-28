@@ -1,0 +1,33 @@
+// frontend/js/floating-menu.js
+
+document.addEventListener("DOMContentLoaded", function () {
+  var toggleBtn = document.getElementById("floating-toggle");
+  var menu = document.getElementById("floating-menu");
+
+  // Show / hide the floating menu
+  if (toggleBtn && menu) {
+    toggleBtn.addEventListener("click", function () {
+      if (menu.style.display === "block") {
+        menu.style.display = "none";
+      } else {
+        menu.style.display = "block";
+      }
+    });
+  }
+
+  // Helper to attach navigation click
+  function attachNav(id, page) {
+    var item = document.getElementById(id);
+    if (!item) return;
+    item.addEventListener("click", function () {
+      window.location.href = page;
+    });
+  }
+
+  // Attach for each menu item (NO EventStyles)
+  attachNav("fm-modernwear", "modernwear.html");
+  attachNav("fm-colorsense", "coloranalysis.html");
+  attachNav("fm-shapeguide", "bodyshape.html");
+  attachNav("fm-huematcher", "suggestion.html");
+});
+

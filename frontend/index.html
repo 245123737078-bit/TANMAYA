@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TANMAYA</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: black;
+        color: white;
+        font-family: "Georgia", serif;
+        text-align: center;
+    }
+
+    /* ---- TOP NAV ---- */
+    .top-nav {
+        width: 100%;
+        padding: 20px 50px;
+        position: absolute;
+        top: 0;
+        display: flex;
+        justify-content: flex-end;
+        gap: 40px;
+    }
+
+    .top-nav a {
+        color: #E6C97A;
+        font-size: 20px;
+        text-decoration: none;
+        font-weight: bold;
+        text-shadow: 0 0 10px #C9A447;
+    }
+
+    .top-nav a:hover {
+        text-decoration: underline;
+        text-shadow: 0 0 20px gold;
+    }
+
+    /* ---- TITLE ---- */
+    h1 {
+        font-size: 95px;
+        margin-top: 120px;
+        background: linear-gradient(#F8E7B2, #D4AF37, #8C6B2E);
+        -webkit-background-clip: text;
+        color: transparent;
+        text-shadow: 0 0 25px #D4AF37;
+        font-weight: 900;
+        letter-spacing: 5px;
+    }
+
+    h2 {
+        font-size: 35px;
+        margin-top: -10px;
+        color: #E9D39C;
+        text-shadow: 0 0 12px #C9A447;
+        font-weight: bold;
+    }
+
+    .sub {
+        font-size: 22px;
+        margin-top: 20px;
+        color: #E3C98A;
+    }
+
+    .card {
+        width: 60%;
+        margin: 80px auto;
+        background: rgba(212, 175, 55, 0.08);
+        padding: 60px 0;
+        border-radius: 30px;
+        box-shadow: 0 0 40px rgba(212, 175, 55, 0.2);
+        backdrop-filter: blur(3px);
+    }
+
+    .gold-btn {
+        font-size: 24px;
+        padding: 16px 40px;
+        margin: 15px;
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+        background: linear-gradient(#F1D89A, #C9A447, #8C6B2E);
+        color: black;
+        font-weight: bold;
+        box-shadow: 0 0 20px #D4AF37, 0 0 40px rgba(212, 175, 55, 0.5);
+        transition: 0.3s;
+    }
+
+    .gold-btn:hover {
+        box-shadow: 0 0 50px #D4AF37, 0 0 90px #D4AF37;
+        transform: scale(1.05);
+    }
+
+    /* ---- FLOATING MENU ---- */
+    #floating-toggle {
+        position: fixed;
+        top: 40%;
+        right: 10px;
+        background: #ffffff;
+        color: #000000;
+        border: none;
+        padding: 6px 10px;
+        cursor: pointer;
+        border-radius: 6px;
+        font-weight: bold;
+        z-index: 999;
+    }
+
+    #floating-menu {
+        position: fixed;
+        top: 40%;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.9);
+        border: 1px solid #E6C97A;
+        border-radius: 12px;
+        padding: 10px 16px;
+        display: none; /* hidden by default */
+        z-index: 998;
+    }
+
+    #floating-menu ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    #floating-menu li {
+        color: #E6C97A;
+        font-weight: bold;
+        margin: 6px 0;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    #floating-menu li:hover {
+        text-decoration: underline;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- TOP RIGHT NAVIGATION -->
+<div class="top-nav">
+    <a href="login.html">Login</a>
+    <a href="signup.html">Signup</a>
+    <a href="camera.html">AI Analysis</a>
+</div>
+
+<!-- MAIN TITLE -->
+<h1>TANMAYA</h1>
+<h2>Discover What Truly Suits You ✨</h2>
+
+<p class="sub">
+    AI-powered fashion recommendations tailored for your style & tone.
+</p>
+
+<!-- SELECT FASHION WORLD CARD -->
+<div class="card">
+    <div class="card-title" style="font-size:40px; color:#E6C97A; text-shadow:0 0 12px #C9A447; font-weight:bold;">
+        Choose Your Fashion World
+    </div>
+
+    <button class="gold-btn" onclick="location.href='traditional.html'">Traditional</button>
+    <button class="gold-btn" onclick="location.href='western.html'">Western</button>
+</div>
+
+<!-- FLOATING MENU BUTTON + MENU -->
+<button id="floating-toggle">></button>
+
+<div id="floating-menu">
+    <ul>
+        <li id="fm-modernwear">ModernWear</li>
+        <li id="fm-colorsense">ColorSense</li>
+        <li id="fm-shapeguide">ShapeGuide</li>
+        <li id="fm-huematcher">HueMatcher</li>
+    </ul>
+</div>
+
+<!-- FLOATING MENU LOGIC -->
+<script src="js/floating-menu.js"></script>
+
+</body>
+</html>

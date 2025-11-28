@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explore Styles – TANMAYA</title>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    color: #E6C97A;
+    font-family: "Georgia", serif;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 48px;
+    margin-top: 60px;
+    background: linear-gradient(#F8E7B2, #D4AF37);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 20px #D4AF37;
+    font-weight: bold;
+  }
+
+  .button-box {
+    width: 80%;
+    max-width: 450px;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .gold-btn {
+    padding: 16px;
+    font-size: 20px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(#F1D89A, #C9A447, #8C6B2E);
+    color: black;
+    font-weight: bold;
+    box-shadow: 0 0 25px rgba(212,175,55,0.7);
+    transition: 0.3s;
+  }
+
+  .gold-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px #D4AF37;
+  }
+
+  .back-btn {
+    margin-top: 30px;
+    background: transparent;
+    border: 1px solid #D4AF37;
+    color: #D4AF37;
+    font-size: 18px;
+    padding: 10px 22px;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+
+  .back-btn:hover {
+    background: rgba(212,175,55,0.2);
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Explore Styles</h1>
+
+<div class="button-box">
+  <button class="gold-btn" onclick="location.href='traditionalfit.html'">TraditionalFit</button>
+  <button class="gold-btn" onclick="location.href='coloranalysis.html'">ColorSense</button>
+  <button class="gold-btn" onclick="location.href='bodyshape.html'">ShapeGuide</button>
+  <button class="gold-btn" onclick="location.href='huematcher.html'">HueMatcher</button>
+  <!-- Jewelry Styler – Traditional mode -->
+  <button class="gold-btn" onclick="location.href='jewelrystyler.html?type=traditional'">Jewelry Styler</button>
+</div>
+
+<button class="back-btn" onclick="window.history.back()">⬅ Back</button>
+
+</body>
+</html>
+

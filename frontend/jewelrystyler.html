@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TANMAYA – Jewelry Styler</title>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: #E6C97A;
+    font-family: "Georgia", serif;
+  }
+
+  .wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 40px;
+    margin-bottom: 8px;
+    background: linear-gradient(#F8E7B2,#D4AF37);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 18px #D4AF37;
+  }
+
+  .sub {
+    font-size: 16px;
+    color: #E3C98A;
+    margin-bottom: 30px;
+  }
+
+  .mode-tag {
+    font-size: 13px;
+    color: #f6e4b2;
+    opacity: 0.9;
+    margin-bottom: 25px;
+  }
+
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-bottom: 25px;
+    justify-content: center;
+  }
+
+  .field {
+    flex: 1;
+    min-width: 220px;
+    text-align: left;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #f6e4b2;
+  }
+
+  select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #D4AF37;
+    background: #050505;
+    color: #F6E4B2;
+    font-size: 14px;
+  }
+
+  .gold-btn {
+    margin-top: 15px;
+    padding: 12px 30px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(#F1D89A,#C9A447,#8C6B2E);
+    color: #000;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 0 0 18px rgba(212,175,55,0.7);
+  }
+
+  .gold-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 30px rgba(212,175,55,0.9);
+  }
+
+  .results {
+    margin-top: 35px;
+    padding: 20px 18px 22px;
+    border-radius: 18px;
+    border: 1px solid rgba(212,175,55,0.7);
+    background: rgba(255,255,255,0.03);
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    text-align: left;
+  }
+
+  .results h2 {
+    margin-top: 0;
+    font-size: 22px;
+    color: #F9E4A8;
+  }
+
+  .res-line {
+    margin: 4px 0;
+    font-size: 15px;
+  }
+
+  .label {
+    font-weight: bold;
+    color: #FCE9A8;
+  }
+
+  .back-btn {
+    margin-top: 30px;
+    background: transparent;
+    border: 1px solid #D4AF37;
+    color: #D4AF37;
+    font-size: 16px;
+    padding: 8px 20px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  .back-btn:hover {
+    background: rgba(212,175,55,0.15);
+  }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1>Jewelry Styler</h1>
+  <p class="sub">Match earrings & neckpieces to your face shape, neckline and occasion ✨</p>
+  <p class="mode-tag" id="modeTagText"></p>
+
+  <!-- INPUTS -->
+  <div class="form-row">
+    <div class="field">
+      <label for="faceShape">Face shape</label>
+      <select id="faceShape">
+        <option value="oval">Oval</option>
+        <option value="round">Round</option>
+        <option value="heart">Heart</option>
+        <option value="square">Square</option>
+        <option value="long">Long</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="neckline">Outfit neckline</label>
+      <select id="neckline">
+        <option value="vneck">V-neck / Deep V</option>
+        <option value="boat">Boat neck / Wide neck</option>
+        <option value="high">High neck / Collar</option>
+        <option value="sweetheart">Sweetheart</option>
+        <option value="strapless">Strapless / Off-shoulder</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="occasion">Occasion</label>
+      <select id="occasion">
+        <option value="casual">Casual / College</option>
+        <option value="festive">Festive / Puja</option>
+        <option value="wedding">Wedding / Reception</option>
+        <option value="party">Party / Sangeet</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="gold-btn" id="generateBtn">Get Jewelry Suggestions</button>
+
+  <!-- RESULTS -->
+  <div class="results" id="resultsBox" style="display:none;">
+    <h2>Your Jewelry Match</h2>
+    <p class="res-line"><span class="label">Neckpiece:</span> <span id="resNeck"></span></p>
+    <p class="res-line"><span class="label">Earrings:</span> <span id="resEars"></span></p>
+    <p class="res-line"><span class="label">Metal tone:</span> <span id="resMetal"></span></p>
+    <p class="res-line"><span class="label">Style tip:</span> <span id="resTip"></span></p>
+  </div>
+
+  <button class="back-btn" onclick="window.history.back()">⬅ Back</button>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // detect mode: traditional / western
+  var params = new URLSearchParams(window.location.search);
+  var mode = params.get("type");
+  if (mode !== "western") {
+    mode = "traditional";
+  }
+
+  var modeTag = document.getElementById("modeTagText");
+  if (mode === "traditional") {
+    modeTag.textContent = "Mode: Traditional – suggests jhumkas, chandbalis, temple & ethnic sets.";
+  } else {
+    modeTag.textContent = "Mode: Western – suggests hoops, studs, minimal chains & modern pieces.";
+  }
+
+  var faceEl = document.getElementById("faceShape");
+  var neckEl = document.getElementById("neckline");
+  var occEl  = document.getElementById("occasion");
+  var btn    = document.getElementById("generateBtn");
+
+  var box    = document.getElementById("resultsBox");
+  var resNeck  = document.getElementById("resNeck");
+  var resEars  = document.getElementById("resEars");
+  var resMetal = document.getElementById("resMetal");
+  var resTip   = document.getElementById("resTip");
+
+  btn.addEventListener("click", function () {
+    var face = faceEl.value;
+    var neck = neckEl.value;
+    var occ  = occEl.value;
+
+    var neckpiece;
+    var earrings;
+    var metal;
+    var tip;
+
+    // ------------------------
+    // NECKPIECE LOGIC
+    // ------------------------
+    if (mode === "traditional") {
+      if (neck === "vneck") {
+        neckpiece = "a soft V-shaped necklace or simple kundan pendant following the V-line.";
+      } else if (neck === "boat") {
+        neckpiece = "a close-fitting choker or temple collar necklace that sits above the neckline.";
+      } else if (neck === "high") {
+        neckpiece = "skip heavy neckpiece; choose just a light long chain or focus entirely on earrings.";
+      } else if (neck === "sweetheart") {
+        neckpiece = "a curved rani haar or mid-length kundan set that mirrors the sweetheart shape.";
+      } else { // strapless
+        neckpiece = "a statement choker or layered pearls that fill the open neckline beautifully.";
+      }
+    } else {
+      // western neckpieces
+      if (neck === "vneck") {
+        neckpiece = "a delicate pendant chain that follows the V, or a layered minimal necklace.";
+      } else if (neck === "boat") {
+        neckpiece = "a short collar necklace or fine chain that stays close to the base of the neck.";
+      } else if (neck === "high") {
+        neckpiece = "no necklace needed – focus on bold earrings or simple studs + watch.";
+      } else if (neck === "sweetheart") {
+        neckpiece = "a dainty curved necklace or a single statement piece that sits above the neckline.";
+      } else { // strapless
+        neckpiece = "a sleek choker or layered chains to balance the open shoulders.";
+      }
+    }
+
+    // ------------------------
+    // EARRINGS LOGIC (FACE SHAPE)
+    // ------------------------
+    if (mode === "traditional") {
+      if (face === "round") {
+        earrings = "long jhumkas or vertical chandbalis to create length in the face.";
+      } else if (face === "oval") {
+        earrings = "almost any style – studs, jhumkas, chandbalis or ear cuffs all work well.";
+      } else if (face === "heart") {
+        earrings = "teardrop jhumkas or earrings that add volume near the jawline.";
+      } else if (face === "square") {
+        earrings = "round chandbalis or curved meenakari pieces to soften angles.";
+      } else { // long
+        earrings = "studs or mid-length jhumkas; avoid very long, thin danglers that stretch the face.";
+      }
+    } else {
+      if (face === "round") {
+        earrings = "thin long drops or geometric danglers to lengthen your face.";
+      } else if (face === "oval") {
+        earrings = "hoops, huggies, drops – you can experiment with almost anything.";
+      } else if (face === "heart") {
+        earrings = "teardrop earrings or small hoops that balance a wider forehead.";
+      } else if (face === "square") {
+        earrings = "round hoops, soft curves and drop earrings to smoothen sharp edges.";
+      } else { // long
+        earrings = "studs, small hoops or medium drops; avoid extra-long straight danglers.";
+      }
+    }
+
+    // ------------------------
+    // METAL LOGIC (OCCASION)
+    // ------------------------
+    if (mode === "traditional") {
+      if (occ === "wedding") {
+        metal = "Antique gold / temple finish or rich kundan with hints of green or red stones.";
+      } else if (occ === "festive") {
+        metal = "Yellow gold or oxidized silver – match with saree/kurti border and bangles.";
+      } else if (occ === "party") {
+        metal = "Polished gold, kundan or mirror work pieces that catch the light on stage.";
+      } else {
+        metal = "Lightweight oxidized silver or small gold studs suited for daily ethnic wear.";
+      }
+    } else {
+      if (occ === "wedding") {
+        metal = "Rose-gold or high-shine silver with stones to complement modern gowns or dresses.";
+      } else if (occ === "festive") {
+        metal = "Gold-tone or mixed metal pieces to match western-ethnic fusion outfits.";
+      } else if (occ === "party") {
+        metal = "Statement silver, rhinestone or crystal earrings that stand out in low light.";
+      } else {
+        metal = "Minimal gold, silver or stainless-steel pieces – clean and everyday-friendly.";
+      }
+    }
+
+    // ------------------------
+    // TIP LOGIC
+    // ------------------------
+    if (neck === "high") {
+      tip = "Because the neckline is high, let your earrings carry the drama. Keep the neck area simple.";
+    } else if (occ === "wedding") {
+      if (mode === "traditional") {
+        tip = "For heavy sarees or lehengas, balance: either bold neckpiece + lighter earrings, or vice versa.";
+      } else {
+        tip = "If your outfit has a lot of sparkle, keep jewelry structured – one statement area is enough.";
+      }
+    } else if (face === "round") {
+      tip = "Avoid very wide circular earrings; choose designs that draw the eye vertically.";
+    } else {
+      tip = "Always match metal colour with your outfit’s buttons, zips or embellishments for a polished finish.";
+    }
+
+    // SHOW RESULTS
+    resNeck.textContent  = neckpiece;
+    resEars.textContent  = earrings;
+    resMetal.textContent = metal;
+    resTip.textContent   = tip;
+    box.style.display    = "block";
+  });
+});
+</script>
+
+</body>
+</html>

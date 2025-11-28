@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TANMAYA – ModernWear</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    body {
+      margin: 0;
+      background: #050505;
+      color: #f7f3d8;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .mw-back-btn {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      background: transparent;
+      color: #ffd875;
+      border: 1px solid rgba(255, 215, 0, 0.6);
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      transition: 0.2s;
+      z-index: 999;
+    }
+
+    .mw-back-btn:hover {
+      background: rgba(255, 215, 0, 0.1);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+      transform: translateX(-3px);
+    }
+
+    .mw-wrapper {
+      max-width: 900px;
+      margin: 70px auto 40px;
+      padding: 20px;
+    }
+
+    .mw-title {
+      font-size: 2rem;
+      text-align: center;
+      color: #ffd875;
+      margin-bottom: 8px;
+    }
+
+    .mw-subtitle {
+      text-align: center;
+      opacity: 0.75;
+      margin-bottom: 24px;
+      font-size: 0.9rem;
+    }
+
+    .mw-card {
+      background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 215, 0, 0.35);
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.8);
+      padding: 16px;
+      margin-bottom: 22px;
+    }
+
+    .mw-visual {
+      width: 100%;
+      height: 180px;
+      border-radius: 16px;
+      margin-bottom: 10px;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .mw-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #ffe79a;
+      margin: 4px 0 6px;
+    }
+
+    .mw-desc {
+      font-size: 0.9rem;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .mw-colors {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .mw-color-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 6px rgba(0,0,0,0.6);
+    }
+
+    .mw-next-btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background: radial-gradient(circle at top, #ffe08a 0%, #ffc94a 40%, #b7841f 100%);
+      border: none;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1a1200;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      transition: 0.2s;
+      text-align: center;
+      margin-top: 6px;
+    }
+
+    .mw-next-btn:hover {
+      box-shadow: 0 0 14px rgba(255,215,0,0.6);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <button class="mw-back-btn" id="mw-back-btn">← Back</button>
+
+  <div class="mw-wrapper">
+    <h1 class="mw-title">ModernWear</h1>
+    <p class="mw-subtitle">Quick modern fits designed for your shape and colour.</p>
+
+    <div id="mw-card-container">
+      <!-- JS will inject big cards -->
+    </div>
+
+    <button class="mw-next-btn" id="mw-next-btn">Try Another Look</button>
+  </div>
+
+  <script src="js/modernWear.js"></script>
+</body>
+</html>

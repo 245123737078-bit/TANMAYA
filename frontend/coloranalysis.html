@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TANMAYA – Colour Analysis</title>
+
+  <!-- Your main CSS (keep if you have it) -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    body {
+      margin: 0;
+      background: #050505;
+      color: #f7f3d8;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .ca-back-btn {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      background: transparent;
+      color: #ffd875;
+      border: 1px solid rgba(255, 215, 0, 0.6);
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      transition: 0.2s;
+      z-index: 999;
+    }
+
+    .ca-back-btn:hover {
+      background: rgba(255, 215, 0, 0.1);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+      transform: translateX(-3px);
+    }
+
+    .ca-wrapper {
+      max-width: 1100px;
+      margin: 70px auto 40px;
+      padding: 24px;
+    }
+
+    .ca-title {
+      font-size: 2rem;
+      text-align: center;
+      color: #ffd875;
+      margin-bottom: 6px;
+    }
+
+    .ca-subtitle {
+      text-align: center;
+      opacity: 0.75;
+      margin-bottom: 28px;
+    }
+
+    .ca-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 800px) {
+      .ca-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ca-panel {
+      background: linear-gradient(135deg, #141414 0%, #050505 100%);
+      border-radius: 18px;
+      padding: 18px 18px 16px;
+      border: 1px solid rgba(255, 215, 0, 0.35);
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.8);
+    }
+
+    .ca-panel-title {
+      margin: 0 0 6px;
+      font-size: 1.2rem;
+      color: #ffe79a;
+    }
+
+    .ca-panel-sub {
+      margin: 0 0 12px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .ca-video-box {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #000;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      box-shadow: 0 0 14px rgba(0, 0, 0, 0.8);
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ca-video-box video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .ca-overlay-note {
+      position: absolute;
+      bottom: 8px;
+      right: 10px;
+      font-size: 0.75rem;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: #ffd875;
+    }
+
+    .ca-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .ca-btn {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: 1px solid rgba(255, 215, 0, 0.6);
+      background: transparent;
+      color: #ffd875;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: 0.2s;
+    }
+
+    .ca-btn-primary {
+      background: radial-gradient(circle at top, #ffe08a 0%, #ffc94a 40%, #b7841f 100%);
+      color: #1a1200;
+      border-color: rgba(255, 215, 0, 0.9);
+      font-weight: 600;
+    }
+
+    .ca-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .ca-btn:not(:disabled):hover {
+      box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .ca-result-line {
+      font-size: 0.9rem;
+      margin: 4px 0;
+    }
+
+    .ca-palette {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+      min-height: 40px;
+    }
+
+    .ca-swatch {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    }
+
+    .ca-muted {
+      font-size: 0.85rem;
+      opacity: 0.75;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Back button -->
+  <button class="ca-back-btn" id="ca-back-btn">← Back</button>
+
+  <div class="ca-wrapper">
+    <h1 class="ca-title">Colour Analysis (ColorSense)</h1>
+    <p class="ca-subtitle">
+      Turn on your camera, let TANMAYA read your skin tone and undertone, and get your best colour palette.
+    </p>
+
+    <div class="ca-layout">
+      <!-- LEFT: Camera -->
+      <section class="ca-panel">
+        <h2 class="ca-panel-title">Live Camera</h2>
+        <p class="ca-panel-sub">
+          Sit in natural light. Avoid strong coloured lights and heavy filters.
+        </p>
+
+        <div class="ca-video-box">
+          <video id="ca-video" autoplay playsinline></video>
+          <div class="ca-overlay-note">Centre your face · Look straight</div>
+        </div>
+
+        <div class="ca-buttons">
+          <button class="ca-btn ca-btn-primary" id="ca-start-btn">Start Camera</button>
+          <button class="ca-btn" id="ca-scan-btn" disabled>Scan Tone</button>
+        </div>
+      </section>
+
+      <!-- RIGHT: ColorSense Result -->
+      <section class="ca-panel">
+        <h2 class="ca-panel-title">ColorSense Result</h2>
+        <p class="ca-panel-sub">
+          These colours are picked to flatter your natural skin tone.
+        </p>
+
+        <p class="ca-result-line">
+          <strong>Skin tone:</strong>
+          <span id="cs-skinTone">–</span>
+        </p>
+        <p class="ca-result-line">
+          <strong>Undertone:</strong>
+          <span id="cs-undertone">–</span>
+        </p>
+
+        <p style="font-size:0.9rem;margin-top:8px;color:#ffd875;">
+          Recommended palette:
+        </p>
+        <div class="ca-palette" id="cs-palette">
+          <!-- Swatches from JS -->
+        </div>
+
+        <p class="ca-muted">
+          Saved for TraditionalFit, Western outfits and HueMatcher.
+        </p>
+      </section>
+    </div>
+  </div>
+
+  <!-- Camera + ColorSense logic -->
+  <script src="js/colorAnalysis.js"></script>
+</body>
+</html>

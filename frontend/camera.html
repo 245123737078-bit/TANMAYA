@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Analysis</title>
+
+    <style>
+        body {
+            background: black;
+            color: gold;
+            text-align: center;
+            font-family: Cinzel, serif;
+        }
+
+        video {
+            width: 60%;
+            border: 4px solid gold;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 0 20px gold;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 20px;
+            border-radius: 40px;
+            border: none;
+            background: linear-gradient(145deg, #ffdd55, #d4af37);
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 15px gold;
+        }
+
+        button:hover {
+            box-shadow: 0 0 25px gold;
+        }
+
+        #result {
+            margin-top: 30px;
+            font-size: 24px;
+            text-shadow: 0 0 10px gold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>AI Colour Analysis</h1>
+
+    <video id="video" autoplay></video><br>
+    <button onclick="analyzeColor()">Analyze My Skin Tone</button>
+
+    <p id="result"></p>
+
+    <script>
+    const video = document.getElementById("video");
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => video.srcObject = stream)
+        .catch(error => console.error("Camera error:", error));
+
+    function analyzeColor() {
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // Take a 100x100 pixel sample from the center
+        const sampleSize = 100;
+        const startX = (canvas.width / 2) - (sampleSize / 2);
+        const startY = (canvas.height / 2) - (sampleSize / 2);
+
+        const imageData = ctx.getImageData(startX, startY, sampleSize, sampleSize);
+        const data = imageData.data;
+
+        let totalR = 0, totalG = 0, totalB = 0, count = 0;
+
+        for (let i = 0; i < data.length; i += 4) {
+            totalR += data[i];
+            totalG += data[i+1];
+            totalB += data[i+2];
+            count++;
+        }
+
+        const r = totalR / count;
+        const g = totalG / count;
+        const b = totalB / count;
+
+        const brightness = (r + g + b) / 3;
+
+        let tone = "";
+
+        // More accurate thresholds for Indian skin tones
+        if (brightness > 190) tone = "Fair";
+        else if (brightness > 130) tone = "Medium";
+        else tone = "Deep";
+
+        const colourSuggestions = {
+            "Fair": ["Pastel Pink", "Baby Blue", "Lavender", "Rose Gold", "Mint"],
+            "Medium": ["Emerald Green", "Royal Blue", "Wine Red", "Mustard", "Brown"],
+            "Deep": ["Gold", "Burnt Orange", "Teal", "Violet", "Maroon"]
+        };
+
+        document.getElementById("result").innerHTML = `
+            Your Skin Tone: <b>${tone}</b><br>
+            Best Colours: ${colourSuggestions[tone].join(", ")}
+        `;
+    }
+</script>
